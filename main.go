@@ -336,7 +336,8 @@ func runGUI() {
 	})
 
 	// ---- 布局 ----
-	content := container.NewVBox(
+	// 上方为固定控件；日志区放在 Border 布局中央，随窗口拉伸自动占满剩余高度。
+	top := container.NewVBox(
 		desc,
 		container.NewBorder(nil, nil, widget.NewLabel("输入视频"), pickBtn, inputEntry),
 		widget.NewLabel("视频信息"),
@@ -348,8 +349,9 @@ func runGUI() {
 		progressBar,
 		statusLabel,
 		widget.NewLabel("日志："),
-		container.NewVScroll(logLabel),
 	)
+
+	content := container.NewBorder(top, nil, nil, nil, container.NewVScroll(logLabel))
 
 	w.SetContent(container.NewPadded(content))
 	w.ShowAndRun()
